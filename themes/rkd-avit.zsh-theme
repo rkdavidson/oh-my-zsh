@@ -25,7 +25,7 @@ PROMPT='
 PROMPT2='%{$fg[green]%}ᄂ%{$reset_color%} '
 
 #RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
-RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
+RPROMPT='$(_vi_status)%{$(echotc UP 1)%} $(_prompt_nvm) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
 
 
 local _current_dir="%{$fg[blue]%}%6~%{$reset_color%}"
@@ -41,6 +41,13 @@ function _user_host() {
   if [[ -n $me ]]; then
     echo "%{$fg[magenta]%}$me%{$reset_color%}:"
   fi
+}
+
+function _prompt_nvm() {
+  local node_version=$(nvm current)
+  [[ -z "${node_version}" ]] || [[ ${node_version} = "none" ]] || [[ ${node_version} = "system" ]] && return
+
+  echo "%{$fg_bold[grey]%}‹%{$reset_color%}%{$fg_bold[green]%}\U2B22%{$reset_color%}%{$fg_bold[white]%} ${node_version:1}%{$reset_color%}%{$fg_bold[grey]%}›%{$reset_color%}"
 }
 
 function _vi_status() {
@@ -121,7 +128,7 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg_bold[red]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg_bold[grey]%}"
 
 # LS colors, made with http://geoff.greer.fm/lscolors/
-#export LSCOLORS="exfxcxdxbxegedabagacad"
-#export LS_COLORS='di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
+export LSCOLORS="exfxcxdxbxegedabagacad"
+export LS_COLORS='di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 #export GREP_COLOR='1;33'
 
