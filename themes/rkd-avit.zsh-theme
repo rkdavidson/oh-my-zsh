@@ -25,7 +25,7 @@ PROMPT='
 PROMPT2='%{$fg[green]%}ᄂ%{$reset_color%} '
 
 #RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
-RPROMPT='$(_vi_status)%{$(echotc UP 1)%} $(_prompt_nvm) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
+RPROMPT='$(_vi_status)%{$(echotc UP 1)%} ${_return_status}%{$(echotc DO 1)%}'
 
 
 local _current_dir="%{$fg[blue]%}%6~%{$reset_color%}"
@@ -43,12 +43,12 @@ function _user_host() {
   fi
 }
 
-function _prompt_nvm() {
-  local node_version=$(nvm current)
-  [[ -z "${node_version}" ]] || [[ ${node_version} = "none" ]] || [[ ${node_version} = "system" ]] && return
+# function _prompt_nvm() {
+#   local node_version=$(nvm current)
+#   [[ -z "${node_version}" ]] || [[ ${node_version} = "none" ]] || [[ ${node_version} = "system" ]] && return
 
-  echo "%{$fg_bold[grey]%}‹%{$reset_color%}%{$fg_bold[green]%}\U2B22%{$reset_color%}%{$fg_bold[white]%} ${node_version:1}%{$reset_color%}%{$fg_bold[grey]%}›%{$reset_color%}"
-}
+#   echo "%{$fg_bold[grey]%}‹%{$reset_color%}%{$fg_bold[green]%}\U2B22%{$reset_color%}%{$fg_bold[white]%} ${node_version:1}%{$reset_color%}%{$fg_bold[grey]%}›%{$reset_color%}"
+# }
 
 function _vi_status() {
   if {echo $fpath | grep -q "plugins/vi-mode"}; then
@@ -64,37 +64,37 @@ function _ruby_version() {
 
 # Determine the time since last commit. If branch is clean,
 # use a neutral color, otherwise colors will vary according to time.
-function _git_time_since_commit() {
-  if git rev-parse --git-dir > /dev/null 2>&1; then
-    # Only proceed if there is actually a commit.
-    if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
-      # Get the last commit.
-      last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
-      now=$(date +%s)
-      seconds_since_last_commit=$((now-last_commit))
+# function _git_time_since_commit() {
+#   if git rev-parse --git-dir > /dev/null 2>&1; then
+#     # Only proceed if there is actually a commit.
+#     if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
+#       # Get the last commit.
+#       last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
+#       now=$(date +%s)
+#       seconds_since_last_commit=$((now-last_commit))
 
-      # Totals
-      minutes=$((seconds_since_last_commit / 60))
-      hours=$((seconds_since_last_commit/3600))
+#       # Totals
+#       minutes=$((seconds_since_last_commit / 60))
+#       hours=$((seconds_since_last_commit/3600))
 
-      # Sub-hours and sub-minutes
-      days=$((seconds_since_last_commit / 86400))
-      sub_hours=$((hours % 24))
-      sub_minutes=$((minutes % 60))
+#       # Sub-hours and sub-minutes
+#       days=$((seconds_since_last_commit / 86400))
+#       sub_hours=$((hours % 24))
+#       sub_minutes=$((minutes % 60))
 
-      if [ $hours -gt 24 ]; then
-          commit_age="${days}d"
-      elif [ $minutes -gt 60 ]; then
-          commit_age="${sub_hours}h${sub_minutes}m"
-      else
-          commit_age="${minutes}m"
-      fi
+#       if [ $hours -gt 24 ]; then
+#           commit_age="${days}d"
+#       elif [ $minutes -gt 60 ]; then
+#           commit_age="${sub_hours}h${sub_minutes}m"
+#       else
+#           commit_age="${minutes}m"
+#       fi
 
-      color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL
-      echo "$color$commit_age%{$reset_color%}"
-    fi
-  fi
-}
+#       color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL
+#       echo "$color$commit_age%{$reset_color%}"
+#     fi
+#   fi
+# }
 
 if [[ $USER == "root" ]]; then
   CARETCOLOR="red"
