@@ -23,6 +23,15 @@ alias md='mkdir -p'
 alias rd=rmdir
 # alias d='dirs -v | head -10'
 
+function d () {
+  if [[ -n $1 ]]; then
+    dirs "$@"
+  else
+    dirs -v | head -10
+  fi
+}
+compdef _dirs d
+
 # List directory contents
 # alias lsa='ls -lah'
 # alias l='ls -lah'
