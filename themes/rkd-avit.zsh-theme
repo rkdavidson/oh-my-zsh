@@ -19,7 +19,7 @@
 #
 
 PROMPT='
-%{$fg_bold[red]%}ॐ %{$reset_color%} $(_user_host)${_current_dir} $(git_prompt_info) $(_ruby_version)
+%{$fg_bold[cyan]%}☯%{$reset_color%} $(_user_host)${_current_dir} $(git_prompt_info) $(_ruby_version)
 %{$fg_bold[green]%}› %{$reset_color%}'
 
 PROMPT2='%{$fg[green]%}ᄂ%{$reset_color%} '
